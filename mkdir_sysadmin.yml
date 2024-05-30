@@ -1,0 +1,8 @@
+---
+- name: Create Sysadmin folder
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Create ansible directory
+      command: mkdir -p /sysadmin/scripts
