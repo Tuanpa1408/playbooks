@@ -13,6 +13,11 @@
       user:
         name: hoannv35
         password: "{{ 'VHQwYXrOqDt10y2N' | password_hash('sha512') }}"
+  
+    - name: Thay đổi shell mặc định cho người dùng hoannv35 thành bash
+      user:
+        name: hoannv35
+        shell: /bin/bash
 
     - name: Thêm người dùng hoannv35 vào cấu hình SSH
       lineinfile:
