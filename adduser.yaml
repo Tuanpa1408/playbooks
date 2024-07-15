@@ -1,0 +1,36 @@
+---
+- name: Quản lý người dùng và cấu hình SSH
+  hosts: all
+  become: yes
+  tasks:
+    - name: Tạo người dùng hoannv35
+      user:
+        name: hoannv35
+        create_home: yes
+        state: present
+
+    - name: Đặt mật khẩu cho người dùng hoannv35
+      user:
+        name: hoannv35
+        password: "{{ 'VHQwYXrOqDt10y2N' | password_hash('sha512') }}"
+
+    - name: Thêm người dùng hoannv35 vào cấu hình SSH
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^AllowUsers'
+        line: 'AllowUsers hoannv35'
+        create: yes
+        state: present
+
+    - name: Reload dịch vụ SSH
+      service:
+        name: sshd
+        state: reloaded
+
+    - name: Thêm quyền sudo cho người dùng hoannv35
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^hoannv35 '
+        line: 'hoannv35 ALL=(ALL) NOPASSWD:ALL'
+        validate: 'visudo -cf %s'
