@@ -1,8 +1,0 @@
----
-- name: Create Sysadmin folder
-  hosts: all
-  become: true
-
-  tasks:
-    - name: Create ansible directory
-      command: mkdir -p /home/vt_admin/sysadmin
